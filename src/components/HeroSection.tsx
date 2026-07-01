@@ -1,14 +1,20 @@
 import hero from "../assets/hero.png";
 
-export default function Hero() {
+export default function HeroSection() {
   return (
-    <section className="relative flex min-h-[480px] w-full items-center overflow-hidden sm:min-h-[560px] lg:min-h-[720px]">
+    <section
+      id="hardware"
+      className="relative flex min-h-[480px] w-full scroll-mt-20 items-center overflow-hidden sm:min-h-[560px] lg:min-h-[720px]"
+    >
       {/* Image container: full width minus side margins. `group` lives here so
           hover only triggers inside this exact area, not the black margins. */}
       <div className="group absolute inset-y-0 left-10 right-10 flex items-center justify-center overflow-hidden sm:left-16 sm:right-16 lg:left-24 lg:right-24">
         <img
           src={hero}
           alt="PlayStation 5 console and DualSense controller"
+          loading="eager"
+          fetchPriority="high"
+          decoding="sync"
           className="absolute inset-0 h-full w-full scale-110 object-cover object-center transition-transform duration-500 group-hover:scale-100"
         />
         {/* Overlay: darkens on hover so the revealed text stays readable */}
