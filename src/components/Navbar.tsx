@@ -3,16 +3,8 @@ import { Search, Menu, X, Sun, Moon } from "lucide-react";
 
 import { useTheme } from "../context/ThemeContext";
 
-type NavLink = {
-  label: string;
-  href: string;
-};
 
-const NAV_LINKS: NavLink[] = [
-  { label: "Hardware", href: "#hardware" },
-  { label: "Games", href: "#games" },
-  { label: "Accessories", href: "#accessories" },
-];
+
 
 export default function Navbar() {
   const [activeLink, setActiveLink] = useState<string>("Hardware");
@@ -42,29 +34,7 @@ export default function Navbar() {
         </a>
 
         {/* Desktop links */}
-        <ul className="hidden md:flex items-center gap-10">
-          {NAV_LINKS.map((link) => {
-            const isActive = activeLink === link.label;
-            return (
-              <li key={link.label}>
-                <a
-                  href={link.href}
-                  onClick={(e) => handleNavClick(e, link.href, link.label)}
-                  className={`relative pb-2 text-[15px] transition-colors ${
-                    isActive
-                      ? "text-black dark:text-white"
-                      : "text-black/60 hover:text-black/90 dark:text-white/60 dark:hover:text-white/90"
-                  }`}
-                >
-                  {link.label}
-                  {isActive && (
-                    <span className="absolute left-0 -bottom-[1px] h-[2px] w-full bg-indigo-400" />
-                  )}
-                </a>
-              </li>
-            );
-          })}
-        </ul>
+        
 
         <div className="hidden md:flex items-center gap-6">
           <button
@@ -101,24 +71,7 @@ export default function Navbar() {
       {mobileOpen && (
         <div className="border-t border-black/10 px-6 py-4 dark:border-white/10 md:hidden">
           <ul className="flex flex-col gap-4">
-            {NAV_LINKS.map((link) => {
-              const isActive = activeLink === link.label;
-              return (
-                <li key={link.label}>
-                  <a
-                    href={link.href}
-                    onClick={(e) => handleNavClick(e, link.href, link.label)}
-                    className={`text-[15px] ${
-                      isActive
-                        ? "font-medium text-black dark:text-white"
-                        : "text-black/60 dark:text-white/60"
-                    }`}
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              );
-            })}
+           
           </ul>
           <div className="mt-6 flex items-center gap-6">
             <button
