@@ -4,7 +4,7 @@ export default function HeroSection() {
   return (
     <section
       id="hardware"
-      className="relative flex min-h-[480px] w-full scroll-mt-20 items-center overflow-hidden sm:min-h-[560px] lg:min-h-[720px]"
+      className="relative flex min-h-[480px] w-full scroll-mt-20 items-center overflow-hidden bg-white dark:bg-black sm:min-h-[560px] lg:min-h-[720px]"
     >
       {/* Image container: full width minus side margins. `group` lives here so
           hover only triggers inside this exact area, not the black margins. */}

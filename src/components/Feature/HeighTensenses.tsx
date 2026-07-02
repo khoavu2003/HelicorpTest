@@ -28,21 +28,23 @@ const CARDS: SenseCard[] = [
 
 export default function HeightenSenses() {
   return (
-    <section className="w-full bg-black py-24 sm:py-32">
-      {/* Outer: equal padding on both sides + flex-center so the gray box
+    <section className="w-full bg-white py-24 dark:bg-black sm:py-32">
+      {/* Outer: equal padding on both sides + flex-center so the box
           is always truly centered, even past the max-width cap on wide screens */}
       <div className="flex justify-center px-10 sm:px-16 lg:px-24">
-        <div className="w-full max-w-7xl bg-neutral-900 py-16">
+        <div className="w-full max-w-7xl bg-neutral-100 py-16 dark:bg-neutral-900">
           <div className="mx-auto max-w-5xl px-6">
             {/* Heading */}
             <div className="flex flex-col items-center text-center">
-              <h2 className="my-8 text-3xl font-bold text-white sm:text-4xl sm:my-12">
+              <h2 className="my-8 text-3xl font-bold text-black dark:text-white sm:my-12 sm:text-4xl">
                 Heighten Your Senses
               </h2>
               <span className="mt-4 h-[2px] w-24 bg-indigo-400" />
             </div>
 
-            {/* Cards */}
+            {/* Cards: photo + dark gradient overlay stay constant regardless
+                of site theme, since the white title text needs to sit on a
+                darkened image, not on the page background. */}
             <div className="mt-16 grid grid-cols-1 gap-1 sm:grid-cols-2">
               {CARDS.map((card) => (
                 <div
