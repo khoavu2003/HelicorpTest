@@ -23,7 +23,7 @@ const FEATURES: Feature[] = [
 
 export default function FeatureDualSense() {
   return (
-    <section id="accessories" className="w-full scroll-mt-20 bg-black py-24 sm:py-32">
+    <section className="w-full scroll-mt-20 bg-black py-24 sm:py-32">
       <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-16 px-6 lg:grid-cols-2 lg:gap-12 lg:px-16">
         {/* Left: text content */}
         <div>

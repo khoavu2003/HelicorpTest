@@ -1,20 +1,37 @@
 import { ChevronRight } from "lucide-react";
+import controllerImg from "../../assets/accessories/controller.jpg";
+import gamingAudioImg from "../../assets/accessories/gaming-audio.jpg";
+import psPortalImg from "../../assets/accessories/ps-portal.jpg";
+import perfectSetupImg from "../../assets/accessories/perfect-setup.jpg";
 
-// Simple placeholder block for images not yet provided.
-// Swap each one for a real <img src={...} className="h-full w-full object-cover" /> later.
-function ImagePlaceholder({ label, className = "" }: { label: string; className?: string }) {
+// Wraps a product photo that has its own light/white background in a
+// rounded white tile, so it reads as an intentional "product card" on the
+// dark section instead of an accidental white box.
+function ProductTile({
+  src,
+  alt,
+  className = "",
+}: {
+  src: string;
+  alt: string;
+  className?: string;
+}) {
   return (
-    <div
-      className={`flex items-center justify-center bg-neutral-800 text-xs text-white/30 ${className}`}
-    >
-      {label}
+    <div className={`overflow-hidden rounded-xl bg-white p-3 ${className}`}>
+      <img
+        src={src}
+        alt={alt}
+        loading="lazy"
+        decoding="async"
+        className="h-full w-full object-contain"
+      />
     </div>
   );
 }
-
+ 
 export default function AccessoriesShowcase() {
   return (
-    <section className="w-full bg-neutral-950 py-20 sm:py-28">
+    <section id="accessories" className="w-full scroll-mt-20 bg-neutral-950 py-20 sm:py-28">
       <div className="mx-auto max-w-6xl px-6 lg:px-10">
         {/* Top link */}
         <div className="flex justify-end">
@@ -26,12 +43,20 @@ export default function AccessoriesShowcase() {
             <ChevronRight size={14} />
           </a>
         </div>
-
+ 
         {/* Controllers + Gaming audio */}
         <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
           {/* Controllers */}
           <div className="flex flex-col items-center bg-neutral-900 p-8 text-center">
-            <ImagePlaceholder label="Controller image" className="h-40 w-full" />
+            {/* Controller photo already has a black background, so it sits
+                directly on the dark card with no wrapper needed. */}
+            <img
+              src={controllerImg}
+              alt="DualSense wireless controller"
+              loading="lazy"
+              decoding="async"
+              className="h-56 w-full object-contain"
+            />
             <h3 className="mt-6 text-lg font-bold text-white">Controllers</h3>
             <p className="mt-3 max-w-sm text-sm leading-relaxed text-white/60">
               Discover a range of vibrant DualSense wireless controller
@@ -46,10 +71,14 @@ export default function AccessoriesShowcase() {
               All controllers
             </button>
           </div>
-
+ 
           {/* Gaming audio */}
           <div className="flex flex-col items-center bg-neutral-900 p-8 text-center">
-            <ImagePlaceholder label="Gaming audio image" className="h-40 w-full" />
+            <ProductTile
+              src={gamingAudioImg}
+              alt="PULSE wireless gaming headset"
+              className="h-40 w-full"
+            />
             <h3 className="mt-6 text-lg font-bold text-white">
               Gaming audio
             </h3>
@@ -70,15 +99,14 @@ export default function AccessoriesShowcase() {
             </div>
           </div>
         </div>
-
+ 
         {/* Perfect your setup */}
-        <div className="mt-4 grid grid-cols-1 gap-6 bg-neutral-900 p-8 sm:grid-cols-[auto_1fr] sm:items-center">
-          <div className="flex gap-3">
-            <ImagePlaceholder label="Cover" className="h-24 w-24 shrink-0" />
-            <ImagePlaceholder label="Stand" className="h-24 w-24 shrink-0" />
-            <ImagePlaceholder label="Media remote" className="h-24 w-24 shrink-0" />
-            <ImagePlaceholder label="Disc drive" className="h-24 w-24 shrink-0" />
-          </div>
+        <div className="mt-4 grid grid-cols-1 gap-6 bg-neutral-900 p-8 sm:grid-cols-[1fr_1fr] sm:items-center">
+          <ProductTile
+            src={perfectSetupImg}
+            alt="PS5 accessories: HD camera, media remote, dual charging station, and expansion drive"
+            className="h-28 w-full sm:h-32"
+          />
           <div>
             <h3 className="text-lg font-bold text-white">
               Perfect your setup
@@ -100,13 +128,14 @@ export default function AccessoriesShowcase() {
             </p>
           </div>
         </div>
-
+ 
         <div className="my-16 h-px w-full bg-white/10" />
-
+ 
         {/* PlayStation Portal */}
         <div className="grid grid-cols-1 items-center gap-10 sm:grid-cols-2">
-          <ImagePlaceholder
-            label="PlayStation Portal image"
+          <ProductTile
+            src={psPortalImg}
+            alt="PlayStation Portal remote player"
             className="aspect-[4/3] w-full"
           />
           <div>
@@ -122,35 +151,7 @@ export default function AccessoriesShowcase() {
             <button className="mt-6 rounded-full bg-indigo-500 px-6 py-2.5 text-xs font-semibold text-white transition-colors hover:bg-indigo-400">
               PS Portal details
             </button>
-            <p className="mt-3 text-[10px] text-white/30">
-              Screen images simulated.
-            </p>
-          </div>
-        </div>
-
-        <div className="my-16 h-px w-full bg-white/10" />
-
-        {/* PlayStation App */}
-        <div className="grid grid-cols-1 items-center gap-10 sm:grid-cols-2">
-          <div className="order-2 sm:order-1">
-            <h3 className="text-2xl font-bold text-white">
-              Stay connected with PlayStation App
-            </h3>
-            <p className="mt-3 max-w-md text-sm leading-relaxed text-white/60">
-              Bring your PS5 experience with you wherever you go with the
-              companion PlayStation App. Stay in touch with PlayStation
-              friends via text and voice chat, view your media gallery with
-              Game Captures, purchase games via PlayStation&trade; Store and
-              more, all from the free app for Apple and Android devices.
-            </p>
-            <button className="mt-6 rounded-full bg-indigo-500 px-6 py-2.5 text-xs font-semibold text-white transition-colors hover:bg-indigo-400">
-              Full PS App details
-            </button>
-          </div>
-          <div className="order-1 flex justify-center gap-4 sm:order-2">
-            <ImagePlaceholder label="App screen 1" className="h-64 w-32 sm:h-72 sm:w-36" />
-            <ImagePlaceholder label="App screen 2" className="h-64 w-32 sm:h-72 sm:w-36" />
-            <ImagePlaceholder label="App screen 3" className="h-64 w-32 sm:h-72 sm:w-36" />
+           
           </div>
         </div>
       </div>
