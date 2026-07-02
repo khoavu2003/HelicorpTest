@@ -7,6 +7,7 @@ import FeatureDualSense from './components/Feature/FeatureDualSense'
 import HeightenSenses from './components/Feature/HeighTensenses'
 import TechSpecs from './components/Feature/TechSpecs'
 import GamesSlider from './components/Feature/GamesSlider'
+import AccessoriesShowcase from './components/Feature/Accessoriesshowcase'
 function App() {
   return (
    <div className="min-h-screen bg-black">
@@ -16,6 +17,7 @@ function App() {
       <HeightenSenses></HeightenSenses>
       <TechSpecs></TechSpecs>
       <GamesSlider></GamesSlider>
+      <AccessoriesShowcase></AccessoriesShowcase>
     </div>
   );
 }

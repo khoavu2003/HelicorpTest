@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import ghostOfYotei from "../../assets/game/ghost-of-yotei.jpg";
 import ff7Rebirth from "../../assets/game/ff7-rebirth.jpg";
@@ -9,7 +9,7 @@ import astroBot from "../../assets/game/astro-bot-poster.jpg";
 import baldursGate3 from "../../assets/game/baldurs-gate-3.jpg";
 import fc26 from "../../assets/game/fc26.jpg";
 import redDeadImage from "../../assets/game/red-dead-redemption-2-downscaled.jpg";
-import firstLight007 from "../../assets/game/first-light-007.jpg"
+import firstLight007 from "../../assets/game/first-light-007.jpg";
 
 type Game = {
   title: string;
@@ -27,12 +27,12 @@ const GAMES: Game[] = [
     image: ghostOfYotei,
   },
   {
-  title: "007 First Light",
-  description:
-    "Step into a young James Bond's first mission as MI6's newest recruit, navigating a world of deception before he becomes the legend.",
-  gradient: "from-amber-600 via-yellow-700 to-black",
-  image: firstLight007, // import firstLight007 from "../assets/games/first-light-007.jpg";
-},
+    title: "007 First Light",
+    description:
+      "Step into a young James Bond's first mission as MI6's newest recruit, navigating a world of deception before he becomes the legend.",
+    gradient: "from-amber-600 via-yellow-700 to-black",
+    image: firstLight007,
+  },
   {
     title: "Final Fantasy VII Rebirth",
     description:
@@ -92,8 +92,9 @@ const GAMES: Game[] = [
 ];
 
 const AUTO_ADVANCE_MS = 4000;
-const CARD_STEP = 220; // horizontal distance (px) between each card's center, desktop
+const CARD_STEP = 220;
 const CARD_STEP_MOBILE = 170;
+const VISIBLE_DISTANCE = 2; // only cards within this circular distance are mounted at all
 
 // Shortest signed circular distance from `active` to `index`, range: (-n/2, n/2]
 function circularOffset(index: number, active: number, total: number) {
@@ -107,6 +108,12 @@ export default function GamesSlider() {
   const [active, setActive] = useState(2);
   const [isPaused, setIsPaused] = useState(false);
   const [step, setStep] = useState(CARD_STEP);
+  // Tracks every index that has ever been visible, so once an image is
+  // loaded it stays mounted (no repeated unmount/remount thrash) but we
+  // still never mount more than necessary up front.
+  const [everSeen, setEverSeen] = useState<Set<number>>(
+    () => new Set([0, 1, 2, 3, 4]),
+  );
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const total = GAMES.length;
 
@@ -119,6 +126,9 @@ export default function GamesSlider() {
     return () => window.removeEventListener("resize", updateStep);
   }, []);
 
+  // Single interval for the whole component lifetime; pausing just stops
+  // ticking rather than tearing the interval down and rebuilding it on
+  // every slide change.
   useEffect(() => {
     if (isPaused) return;
     timerRef.current = setInterval(() => {
@@ -129,9 +139,31 @@ export default function GamesSlider() {
     };
   }, [isPaused, total]);
 
-  const goTo = (index: number) => {
-    setActive(((index % total) + total) % total);
-  };
+  const goTo = useCallback(
+    (index: number) => {
+      const next = ((index % total) + total) % total;
+      setActive(next);
+    },
+    [total],
+  );
+
+  // Expand the "ever seen" set lazily as the user/timer reaches new slides,
+  // so far-away images are never fetched until they're actually about to
+  // be shown.
+  useEffect(() => {
+    setEverSeen((prev) => {
+      let changed = false;
+      const next = new Set(prev);
+      for (let d = -VISIBLE_DISTANCE; d <= VISIBLE_DISTANCE; d++) {
+        const idx = ((active + d) % total + total) % total;
+        if (!next.has(idx)) {
+          next.add(idx);
+          changed = true;
+        }
+      }
+      return changed ? next : prev;
+    });
+  }, [active, total]);
 
   return (
     <section
@@ -146,15 +178,17 @@ export default function GamesSlider() {
         </h2>
       </div>
 
-      {/* Circular track: every card is absolutely positioned around the
-          center based on its circular distance from `active`, then slides
-          smoothly as `active` changes. Crossing the wrap point happens
-          just past the visible range, so the loop feels seamless. */}
       <div className="relative mt-14 flex h-64 items-center justify-center sm:h-80">
         {GAMES.map((game, index) => {
           const offset = circularOffset(index, active, total);
           const isActive = offset === 0;
-          const isVisible = Math.abs(offset) <= 2;
+          const isVisible = Math.abs(offset) <= VISIBLE_DISTANCE;
+
+          // Never mount cards outside the visible range at all: no DOM
+          // node, no <img>, no network request.
+          if (!isVisible) return null;
+
+          const shouldLoadImage = everSeen.has(index);
 
           return (
             <button
@@ -166,23 +200,24 @@ export default function GamesSlider() {
                   isActive ? 1 : 0.82
                 })`,
                 zIndex: 10 - Math.abs(offset),
-                opacity: isVisible ? (isActive ? 1 : 0.55) : 0,
-                pointerEvents: isVisible ? "auto" : "none",
+                opacity: isActive ? 1 : 0.55,
               }}
               className={`absolute h-48 w-40 shrink-0 overflow-hidden rounded-lg bg-gradient-to-br transition-all duration-500 ease-out sm:h-64 sm:w-56 ${
                 game.gradient
               } ${isActive ? "ring-2 ring-white" : ""}`}
             >
-              {game.image && (
+              {game.image && shouldLoadImage && (
                 <img
                   src={game.image}
                   alt={game.title}
-                  loading="lazy"
+                  width={224}
+                  height={256}
+                  loading={isActive ? "eager" : "lazy"}
                   decoding="async"
+                  fetchPriority={isActive ? "high" : "low"}
                   className="absolute inset-0 h-full w-full object-cover"
                 />
               )}
-              {/* Gradient overlay guarantees the title stays legible even on bright cover art */}
               <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black via-black/60 to-transparent" />
               <span className="absolute inset-x-0 bottom-0 px-3 py-2 text-left text-sm font-bold text-white sm:text-base">
                 {game.title}
@@ -191,7 +226,6 @@ export default function GamesSlider() {
           );
         })}
 
-        {/* Arrows */}
         <button
           aria-label="Previous game"
           onClick={() => goTo(active - 1)}
@@ -208,7 +242,6 @@ export default function GamesSlider() {
         </button>
       </div>
 
-      {/* Active game info */}
       <div className="mx-auto mt-8 max-w-xl px-6 text-center">
         <h3 className="text-sm font-bold uppercase tracking-wide text-white">
           {GAMES[active].title}
@@ -221,7 +254,6 @@ export default function GamesSlider() {
         </button>
       </div>
 
-      {/* Dots */}
       <div className="mt-8 flex items-center justify-center gap-2">
         {GAMES.map((game, index) => (
           <button
