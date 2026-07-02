@@ -7,21 +7,10 @@ import { useTheme } from "../context/ThemeContext";
 
 
 export default function Navbar() {
-  const [activeLink, setActiveLink] = useState<string>("Hardware");
+
   const [mobileOpen, setMobileOpen] = useState<boolean>(false);
   const { theme, toggleTheme } = useTheme();
 
-  const handleNavClick = (
-    e: React.MouseEvent<HTMLAnchorElement>,
-    href: string,
-    label: string,
-  ) => {
-    e.preventDefault();
-    setActiveLink(label);
-    setMobileOpen(false);
-
-    window.history.pushState(null, "", href);
-  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-black/10 bg-white dark:border-white/10 dark:bg-[#0a0a0c]">
