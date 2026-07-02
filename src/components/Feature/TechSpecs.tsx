@@ -13,9 +13,9 @@ const SPECS: Spec[] = [
 
 export default function TechSpecs() {
   return (
-    <section className="w-full bg-black py-24 sm:py-32">
+    <section className="w-full bg-white py-24 dark:bg-black sm:py-32">
       <div className="mx-auto max-w-4xl px-6 lg:px-16">
-        <h2 className="text-center text-3xl font-bold text-white sm:text-4xl">
+        <h2 className="text-center text-3xl font-bold text-black dark:text-white sm:text-4xl">
           Technical Specifications
         </h2>
 
@@ -23,12 +23,12 @@ export default function TechSpecs() {
           {SPECS.map((spec) => (
             <div
               key={spec.label}
-              className="flex flex-col gap-2 border-b border-white/10 py-6 sm:flex-row sm:items-center sm:justify-between"
+              className="flex flex-col gap-2 border-b border-black/10 py-6 dark:border-white/10 sm:flex-row sm:items-center sm:justify-between"
             >
-              <span className="text-xs font-semibold uppercase tracking-[0.15em] text-white/50">
+              <span className="text-xs font-semibold uppercase tracking-[0.15em] text-black/50 dark:text-white/50">
                 {spec.label}
               </span>
-              <span className="text-lg text-white sm:text-right">
+              <span className="text-lg text-black dark:text-white sm:text-right">
                 {spec.value}
               </span>
             </div>
