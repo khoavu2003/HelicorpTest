@@ -9,6 +9,7 @@ import TechSpecs from './components/Feature/TechSpecs'
 import GamesSlider from './components/Feature/GamesSlider'
 import AccessoriesShowcase from './components/Feature/AccessoriesShowcase'
 import BackToTop from './components/BackToTop'
+import BuyNow from './components/Feature/BuyNow'
 function App() {
   return (
    <div className="min-h-screen bg-black">
@@ -20,6 +21,7 @@ function App() {
       <GamesSlider></GamesSlider>
       <AccessoriesShowcase></AccessoriesShowcase>
       <BackToTop></BackToTop>
+      <BuyNow></BuyNow>
     </div>
   );
 }

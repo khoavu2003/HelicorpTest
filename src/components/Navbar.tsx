@@ -10,8 +10,7 @@ const NAV_LINKS: NavLink[] = [
   { label: "Hardware", href: "#hardware" },
   { label: "Games", href: "#games" },
   { label: "Accessories", href: "#accessories" },
-  { label: "News", href: "#news" },
-  { label: "Support", href: "#support" },
+  
 ];
 
 export default function Navbar() {
