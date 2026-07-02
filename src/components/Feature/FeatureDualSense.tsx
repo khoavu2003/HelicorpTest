@@ -1,6 +1,5 @@
 import { Vibrate, Gamepad2 } from "lucide-react";
-import dualsense from "../../assets/dualsense.png";
-
+import dualsense from "../../assets/dualsense.jpg";
 type Feature = {
   icon: React.ReactNode;
   title: string;

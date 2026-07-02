@@ -21,7 +21,7 @@ export default function Navbar() {
   return (
     <header className="w-full bg-[#0a0a0c] border-b border-white/10">
       <nav className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6">
-        {/* Logo */}
+       
         <a
           href="#home"
           className="text-2xl font-bold tracking-tight text-white shrink-0"
@@ -54,7 +54,7 @@ export default function Navbar() {
           })}
         </ul>
 
-        {/* Right side actions */}
+
         <div className="hidden md:flex items-center gap-6">
           <button
             aria-label="Search"
@@ -67,7 +67,7 @@ export default function Navbar() {
           </button>
         </div>
 
-        {/* Mobile toggle */}
+    
         <button
           className="md:hidden text-white"
           aria-label="Toggle menu"
@@ -77,7 +77,7 @@ export default function Navbar() {
         </button>
       </nav>
 
-      {/* Mobile menu */}
+   
       {mobileOpen && (
         <div className="md:hidden border-t border-white/10 px-6 py-4">
           <ul className="flex flex-col gap-4">
