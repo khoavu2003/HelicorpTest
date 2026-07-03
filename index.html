@@ -1,12 +1,58 @@
 <!doctype html>
-<html lang="en">
+<html lang="vi">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <!-- index.html, trong <head> -->
-<link rel="preload" as="image" href="/src/assets/hero.jpg" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>helicorp-test</title>
+
+    <!-- ============ Primary SEO ============ -->
+    <title>PlayStation 5 | Play Has No Limits</title>
+    <meta
+      name="description"
+      content="Khám phá PlayStation 5: tốc độ tải cực nhanh với SSD siêu tốc, DualSense với haptic feedback và adaptive triggers, âm thanh 3D Tempest. Xem thông số kỹ thuật, phụ kiện và các tựa game nổi bật."
+    />
+    <meta name="author" content="Vu Dang Khoa" />
+    <link rel="canonical" href="https://helicorp-test-omega.vercel.app/" />
+
+    <!-- ============ Open Graph (Facebook, Zalo, Discord...) ============ -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="PlayStation 5" />
+    <meta property="og:title" content="PlayStation 5 | Play Has No Limits" />
+    <meta
+      property="og:description"
+      content="Khám phá PlayStation 5: tốc độ tải cực nhanh, DualSense với haptic feedback, âm thanh 3D Tempest. Xem thông số kỹ thuật, phụ kiện và game nổi bật."
+    />
+    <meta property="og:url" content="https://helicorp-test-omega.vercel.app/" />
+    <meta property="og:image" content="https://helicorp-test-omega.vercel.app/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="vi_VN" />
+
+    <!-- ============ Twitter / X Card ============ -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="PlayStation 5 | Play Has No Limits" />
+    <meta
+      name="twitter:description"
+      content="Khám phá PlayStation 5: tốc độ tải cực nhanh, DualSense với haptic feedback, âm thanh 3D Tempest."
+    />
+    <meta name="twitter:image" content="https://helicorp-test-omega.vercel.app/og-image.jpg" />
+
+    <!-- ============ Theme color (thanh trạng thái mobile) ============ -->
+    <meta name="theme-color" content="#0a0a0c" />
+
+    <!-- Sets the `dark` class on <html> synchronously, before React mounts
+         and before first paint. This avoids a post-paint reflow/repaint
+         (which was adding main-thread work right as the LCP hero image was
+         decoding) and avoids a flash of the wrong theme on load. -->
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem("theme");
+          var isDark = stored === "light" ? false : true; // default: dark
+          document.documentElement.classList.toggle("dark", isDark);
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
