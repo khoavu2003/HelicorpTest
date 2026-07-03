@@ -39,6 +39,20 @@
 
     <!-- ============ Theme color (thanh trạng thái mobile) ============ -->
     <meta name="theme-color" content="#0a0a0c" />
+
+    <!-- Sets the `dark` class on <html> synchronously, before React mounts
+         and before first paint. This avoids a post-paint reflow/repaint
+         (which was adding main-thread work right as the LCP hero image was
+         decoding) and avoids a flash of the wrong theme on load. -->
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem("theme");
+          var isDark = stored === "light" ? false : true; // default: dark
+          document.documentElement.classList.toggle("dark", isDark);
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
